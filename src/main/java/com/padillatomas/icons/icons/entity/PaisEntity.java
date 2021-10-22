@@ -30,6 +30,7 @@ public class PaisEntity {
 	private Long id;
 	
 	private String imagen;
+	
 	private String denominacion;
 	
 	@Column(name = "cant_habitantes")
@@ -37,7 +38,7 @@ public class PaisEntity {
 	
 	private Long superficie; // m2
 	
-	// *** Para busca Informacion (Dentro del Objeto ContinenteEntity) y armar Listas ***
+	// *** Para BUSCAR Informacion (Dentro del Objeto ContinenteEntity) y armar Listas ***
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "continente_id", insertable = false, updatable = false)
 	private ContinenteEntity continente;
@@ -45,7 +46,6 @@ public class PaisEntity {
 	// *** Para Updatear, Guardar y Actualizar ***
 	@Column(name = "continente_id", nullable = false)
 	private Long continenteId;
-	
 	
 	// *** 
 	// Cuando creamos Pais, podemos pasarle Lista de Iconos
@@ -61,6 +61,7 @@ public class PaisEntity {
 			joinColumns= @JoinColumn(name = "pais_id"),
 			inverseJoinColumns = @JoinColumn(name = "icon_id"))
 	private Set<IconEntity> icons = new HashSet<>();
+	
 	
 	@Override
 	public boolean equals(Object obj) {

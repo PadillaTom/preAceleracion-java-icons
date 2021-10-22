@@ -39,14 +39,13 @@ public class IconEntity {
 	private Long altura;
 	
 	private String historia;
-	
+		
 	@ManyToMany(mappedBy = "icons", cascade = CascadeType.ALL)
 	private List<PaisEntity> paises = new ArrayList<>();
 	
 	//***
 	// Methods
-	//***
-	
+	//***	
 	public void addPais(PaisEntity pais) {this.paises.add(pais);}
 	
 	public void removePais(PaisEntity pais) {this.paises.remove(pais);}

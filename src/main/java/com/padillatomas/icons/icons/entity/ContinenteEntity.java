@@ -22,5 +22,6 @@ public class ContinenteEntity {
 	private String imagen;
 	
 	private String denominacion;
+	
 
 }
