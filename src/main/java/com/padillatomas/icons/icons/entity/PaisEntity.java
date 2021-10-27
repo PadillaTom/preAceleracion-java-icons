@@ -16,6 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +26,8 @@ import lombok.Setter;
 @Table(name = "pais")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE pais SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class PaisEntity {
 
 	@Id
@@ -38,12 +43,16 @@ public class PaisEntity {
 	
 	private Long superficie; // m2
 	
+	// SOLO Para SOFT DELETE:
+	private boolean deleted = Boolean.FALSE;
+	
 	// *** Para BUSCAR Informacion (Dentro del Objeto ContinenteEntity) y armar Listas ***
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,
+			CascadeType.MERGE,})
 	@JoinColumn(name = "continente_id", insertable = false, updatable = false)
 	private ContinenteEntity continente;
 	
-	// *** Para Updatear, Guardar y Actualizar ***
+	// *** Para Guardar y Actualizar ***
 	@Column(name = "continente_id", nullable = false)
 	private Long continenteId;
 	
@@ -60,10 +69,8 @@ public class PaisEntity {
 			name = "icon_pais",
 			joinColumns= @JoinColumn(name = "pais_id"),
 			inverseJoinColumns = @JoinColumn(name = "icon_id"))
-	private Set<IconEntity> icons = new HashSet<>();
-	
-	
-	// COMENTARIO EN LINEA
+	private Set<IconEntity> icons = new HashSet<>();	
+
 	
 	
 	@Override
