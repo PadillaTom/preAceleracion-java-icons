@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.padillatomas.icons.icons.dto.PaisBasicDTO;
 import com.padillatomas.icons.icons.dto.PaisDTO;
 import com.padillatomas.icons.icons.entity.PaisEntity;
+import com.padillatomas.icons.icons.mapper.IconMapper;
 import com.padillatomas.icons.icons.mapper.PaisMapper;
 import com.padillatomas.icons.icons.repository.PaisRepository;
 import com.padillatomas.icons.icons.service.PaisService;
@@ -19,6 +20,8 @@ public class PaisServiceImpl implements PaisService {
 	// Instanciamos: Mapper
 	@Autowired
 	private PaisMapper paisMapper;
+	@Autowired
+	private IconMapper iconMapper;
 	
 	// Instanciamos: Repository
 	@Autowired
@@ -59,7 +62,26 @@ public class PaisServiceImpl implements PaisService {
 		paisRepo.deleteById(id);
 		
 	}
-	
-	
+
 	// === PUT ===
+	@Override
+	public PaisDTO editPais(Long id, PaisDTO paisToEdit) {
+		PaisEntity savedPais = paisRepo.getById(id);
+		
+		savedPais.setImagen(paisToEdit.getImagen());
+		savedPais.setDenominacion(paisToEdit.getDenominacion());
+		savedPais.setCantidadHabitantes(paisToEdit.getCantidadHabitantes());
+		savedPais.setSuperficie(paisToEdit.getSuperficie());
+		savedPais.setContinenteId(paisToEdit.getContinenteId());
+		savedPais.setIcons(iconMapper.iconDTOSet2EntitySet(paisToEdit.getIcons()));
+		
+		PaisEntity editedPais = paisRepo.save(savedPais);	
+		
+		PaisDTO savedDTO = paisMapper.paisEntity2DTO(editedPais, false);
+		
+		return savedDTO;
+	}
+	
+	
+	
 }

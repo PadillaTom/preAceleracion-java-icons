@@ -60,7 +60,7 @@ public class PaisMapper {
 		
 		if(fetchIcons) {			
 			// Transformo ICON a Entity (Dentro de cada getIcons());
-			List<IconDTO> myList = new ArrayList<>();
+			Set<IconDTO> myList = new HashSet<>();
 			for(IconEntity icon : savedEntity.getIcons()) {
 				myList.add(iconMapper.iconEntity2DTO(icon, false));
 				newDTO.setIcons(myList);		
@@ -109,10 +109,8 @@ public class PaisMapper {
 		}
 		return newList;
 	}
-
-	
-	
+		
 	//
-	// === Entity -> DTO ===
+	// === Set<DTO> -> Set<Entity> ===
 
 }

@@ -1,8 +1,6 @@
 package com.padillatomas.icons.icons.dto;
 
-
-
-import java.util.List;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +19,7 @@ public class PaisDTO {
 	private Long continenteId;	
 	
 	// Pasar un Javascript ARRAY: [{imagen:"asd", denominacion:"asd"},{imagen:"123", denominacion:"123"}]
-	List<IconDTO> icons;
+	Set<IconDTO> icons;
 	
 
 }

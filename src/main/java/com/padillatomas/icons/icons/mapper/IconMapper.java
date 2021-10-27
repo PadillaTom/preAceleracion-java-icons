@@ -3,7 +3,9 @@ package com.padillatomas.icons.icons.mapper;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -75,6 +77,18 @@ public class IconMapper {
 		}
 		
 		return newList;
+	}
+	
+	//
+	// === Set<DTO> -> Set<Entity> ===
+	public Set<IconEntity> iconDTOSet2EntitySet(Set<IconDTO> mySet) {
+		Set<IconEntity> newSet = new HashSet<IconEntity>();
+		
+		for(IconDTO dto : mySet) {
+			newSet.add(iconDTO2IconEntity(dto));
+		}
+		
+		return newSet;
 	}
 
 	

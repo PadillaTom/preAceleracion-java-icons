@@ -15,4 +15,6 @@ public interface PaisService {
 
 	void deletePais(Long id);
 
+	PaisDTO editPais(Long id, PaisDTO paisToEdit);
+
 }
