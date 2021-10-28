@@ -1,5 +1,7 @@
 package com.padillatomas.icons.icons.service.impl;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import com.padillatomas.icons.icons.dto.IconBasicDTO;
 import com.padillatomas.icons.icons.dto.IconDTO;
 import com.padillatomas.icons.icons.entity.IconEntity;
 import com.padillatomas.icons.icons.mapper.IconMapper;
+import com.padillatomas.icons.icons.mapper.PaisMapper;
 import com.padillatomas.icons.icons.repository.IconRepository;
 import com.padillatomas.icons.icons.service.IconService;
 
@@ -18,6 +21,8 @@ public class IconServiceImpl implements IconService {
 	// Instanciamos: Mapper
 	@Autowired
 	private IconMapper iconMapper;
+	@Autowired
+	private PaisMapper paisMapper;
 	
 	// Instanciamos: Repository
 	@Autowired
@@ -42,6 +47,31 @@ public class IconServiceImpl implements IconService {
 	@Override
 	public void deleteIcon(Long id) {
 		iconRepo.deleteById(id);		
+	}
+
+	// === PUT ===		
+	@Override
+	public IconDTO editIcon(Long id, IconDTO iconToEdit) {
+		IconEntity savedIcon = iconRepo.getById(id);
+		
+		// Cast String to Date:
+		String dateDTO = iconToEdit.getFechaCreacion().toString();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		LocalDate transformedDate = LocalDate.parse(dateDTO, formatter);
+		
+		// SET:
+		savedIcon.setImagen(iconToEdit.getImagen());
+		savedIcon.setDenominacion(iconToEdit.getDenominacion());
+		savedIcon.setFechaCreacion(transformedDate);
+		savedIcon.setAltura(iconToEdit.getAltura());
+		savedIcon.setHistoria(iconToEdit.getHistoria());
+		savedIcon.setPaises(paisMapper.paisDTOList2EntityList(iconToEdit.getPaises(), false));	
+				
+		IconEntity editedIcon = iconRepo.save(savedIcon);	
+		
+		IconDTO savedDTO = iconMapper.iconEntity2DTO(editedIcon, false);
+		
+		return savedDTO;
 	}
 
 	

@@ -23,7 +23,7 @@ public class PaisMapper {
 
 	//
 	// === DTO -> Entity ===
-	public PaisEntity paisDTO2Entity(PaisDTO dto) {
+	public PaisEntity paisDTO2Entity(PaisDTO dto, boolean fetchIcons) {
 		
 		PaisEntity newEntity = new PaisEntity();
 		
@@ -35,12 +35,14 @@ public class PaisMapper {
 		// "Ingrese Continente ID:"
 		newEntity.setContinenteId(dto.getContinenteId());	
 		
-		// Transformo ICON a Entity (Dentro de cada getIcons());
-		Set<IconEntity> myList = new HashSet<>();
-		for(IconDTO icon : dto.getIcons()) {
-			myList.add(iconMapper.iconDTO2IconEntity(icon));
+		if(fetchIcons) {			
+			// Transformo ICON a Entity (Dentro de cada getIcons());
+			Set<IconEntity> myList = new HashSet<>();
+			for(IconDTO icon : dto.getIcons()) {
+				myList.add(iconMapper.iconDTO2IconEntity(icon));
+			}
+			newEntity.setIcons(myList);		
 		}
-		newEntity.setIcons(myList);		
 		
 		return newEntity;
 	}
@@ -63,8 +65,8 @@ public class PaisMapper {
 			Set<IconDTO> myList = new HashSet<>();
 			for(IconEntity icon : savedEntity.getIcons()) {
 				myList.add(iconMapper.iconEntity2DTO(icon, false));
-				newDTO.setIcons(myList);		
 			}
+			newDTO.setIcons(myList);		
 		}
 		
 		return newDTO;
@@ -77,6 +79,18 @@ public class PaisMapper {
 		
 		for(PaisEntity ent : entityList) {
 			newList.add(paisEntity2DTO(ent, b));
+		}
+		
+		return newList;
+	}
+	
+	//
+	// === List<DTO> -> List<Entity> ===
+	public List<PaisEntity> paisDTOList2EntityList(List<PaisDTO> listDTO, boolean b) {
+		List<PaisEntity> newList = new ArrayList<>();
+		
+		for(PaisDTO dto : listDTO) {
+			newList.add(paisDTO2Entity(dto, b));
 		}
 		
 		return newList;

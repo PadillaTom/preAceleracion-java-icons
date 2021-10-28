@@ -13,4 +13,6 @@ public interface IconService {
 	List<IconBasicDTO> getAllIcons();
 
 	List<IconDTO> getAllIconDetails();
+
+	IconDTO editIcon(Long id, IconDTO iconToEdit);
 }

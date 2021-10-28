@@ -30,11 +30,10 @@ public class IconMapper {
 		newEntity.setImagen(dto.getImagen());
 		newEntity.setDenominacion(dto.getDenominacion());
 		
+		// Cast STRING to DATE (d/MM/yyyy)
 		String dtoDate = dto.getFechaCreacion();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		LocalDate transformedDate = LocalDate.parse(dtoDate, formatter);
-		
-		// Cast STRING to DATE (LocalDate)
+		LocalDate transformedDate = LocalDate.parse(dtoDate, formatter);		
 		newEntity.setFechaCreacion(transformedDate);
 		
 		newEntity.setAltura(dto.getAltura());
@@ -51,7 +50,12 @@ public class IconMapper {
 		newDTO.setId(icon.getId());
 		newDTO.setImagen(icon.getImagen());
 		newDTO.setDenominacion(icon.getDenominacion());
-		newDTO.setFechaCreacion(icon.getFechaCreacion().toString());
+		
+		// Cast LOCALDATE to STRING (d/MM/yyyy)
+		LocalDate entityDate = icon.getFechaCreacion();
+		String formattedDate = entityDate.format(DateTimeFormatter.ofPattern("d/MM/yyyy"));		
+		newDTO.setFechaCreacion(formattedDate);
+		
 		newDTO.setHistoria(icon.getHistoria());
 		newDTO.setAltura(icon.getAltura());
 		
