@@ -49,8 +49,8 @@ public class IconServiceImpl implements IconService {
 	
 
 	@Override
-	public List<IconDTO> getByFilters(String name, String date, List<Long> paisesIds, String order) {
-		IconFiltersDTO filtersDTO = new IconFiltersDTO(name, date, paisesIds, order);
+	public List<IconDTO> getByFilters(String name, String date, List<Long> cities, String order) {
+		IconFiltersDTO filtersDTO = new IconFiltersDTO(name, date, cities, order);
 		
 		// Mandamos al Repo -> traer todo con las Specifications declaradas en IconSpecifications.
 		List<IconEntity> entities = iconRepo.findAll(iconSpecs.getByFilters(filtersDTO));

@@ -15,7 +15,7 @@ public class IconFiltersDTO {
 	
 	private String name;
 	private String date;
-	private List<Long> paisesIds;
+	private List<Long> cities;
 	private String order;
 	
 	public boolean isASC() {

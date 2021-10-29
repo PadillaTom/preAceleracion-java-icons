@@ -63,13 +63,13 @@ public class IconSpecification {
 			
 			//
 			// PaisesIds: NO ESTA VACIO:			
-			if(!CollectionUtils.isEmpty(filtersDTO.getPaisesIds())) {
+			if(!CollectionUtils.isEmpty(filtersDTO.getCities())) {
 				// Automaticamente usara la tabla Icon_PaisesID para unir
 				// Pais que matchee dentro de lista PaisesIds.				
 				Join<PaisEntity, IconEntity> toBeJoined = root.join("paises", JoinType.INNER);
 				Expression<String> paisesId = toBeJoined.get("id");
 				
-				predicates.add(paisesId.in(filtersDTO.getPaisesIds()));
+				predicates.add(paisesId.in(filtersDTO.getCities()));
 			}
 			
 			// Remove Duplicates: 

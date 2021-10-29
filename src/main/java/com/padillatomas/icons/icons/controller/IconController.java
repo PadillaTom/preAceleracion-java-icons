@@ -46,10 +46,10 @@ public class IconController {
 	public ResponseEntity<List<IconDTO>> getDetailsByFilters(
 				@RequestParam(required =false) String name,
 				@RequestParam(required =false) String date,
-				@RequestParam(required =false) List<Long> paisesIds,
+				@RequestParam(required =false) List<Long> cities,
 				@RequestParam(required =false, defaultValue = "ASC") String order
 			) {
-		List<IconDTO> icons = iconServ.getByFilters(name, date, paisesIds, order);
+		List<IconDTO> icons = iconServ.getByFilters(name, date, cities, order);
 		return ResponseEntity.status(HttpStatus.OK).body(icons);
 	}
 	
