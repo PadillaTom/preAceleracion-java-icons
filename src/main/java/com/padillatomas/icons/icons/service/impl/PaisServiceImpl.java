@@ -2,6 +2,7 @@ package com.padillatomas.icons.icons.service.impl;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.padillatomas.icons.icons.dto.PaisDTO;
 import com.padillatomas.icons.icons.dto.PaisFiltersDTO;
 import com.padillatomas.icons.icons.entity.IconEntity;
 import com.padillatomas.icons.icons.entity.PaisEntity;
+import com.padillatomas.icons.icons.exception.ParamNotFound;
 import com.padillatomas.icons.icons.mapper.IconMapper;
 import com.padillatomas.icons.icons.mapper.PaisMapper;
 import com.padillatomas.icons.icons.repository.PaisRepository;
@@ -75,8 +77,11 @@ public class PaisServiceImpl implements PaisService {
 	
 	@Override
 	public PaisDTO getPaisDetailsById(Long id) {
-		PaisEntity myPais = paisRepo.getById(id);
-		PaisDTO resultDTO = paisMapper.paisEntity2DTO(myPais, true);
+		Optional<PaisEntity> myPais = paisRepo.findById(id);
+		if(!myPais.isPresent()) {
+			throw new ParamNotFound("Pais with id: " + id + " not found." );
+		}
+		PaisDTO resultDTO = paisMapper.paisEntity2DTO(myPais.get(), true);
 		return resultDTO;
 	}	
 
