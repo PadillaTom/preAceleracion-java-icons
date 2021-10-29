@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.padillatomas.icons.icons.dto.PaisBasicDTO;
 import com.padillatomas.icons.icons.dto.PaisDTO;
+import com.padillatomas.icons.icons.entity.PaisEntity;
 
 public interface PaisService {
 
@@ -22,7 +23,9 @@ public interface PaisService {
 	void removeIconFromPais(Long paisId, Long iconId);
 
 	List<PaisDTO> getByFilters(String name, String continent, String order);
-
+	
 	PaisDTO getPaisDetailsById(Long id);
+	
+	PaisEntity getPaisEntityById(Long paisId);
 
 }

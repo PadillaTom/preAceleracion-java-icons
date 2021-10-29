@@ -77,11 +77,8 @@ public class PaisServiceImpl implements PaisService {
 	
 	@Override
 	public PaisDTO getPaisDetailsById(Long id) {
-		Optional<PaisEntity> myPais = paisRepo.findById(id);
-		if(!myPais.isPresent()) {
-			throw new ParamNotFound("Pais with id: " + id + " not found." );
-		}
-		PaisDTO resultDTO = paisMapper.paisEntity2DTO(myPais.get(), true);
+		PaisEntity myPais = this.getPaisEntityById(id);		
+		PaisDTO resultDTO = paisMapper.paisEntity2DTO(myPais, true);
 		return resultDTO;
 	}	
 
@@ -95,7 +92,7 @@ public class PaisServiceImpl implements PaisService {
 	// === PUT ===
 	@Override
 	public PaisDTO editPais(Long id, PaisDTO paisToEdit) {
-		PaisEntity savedPais = paisRepo.getById(id);
+		PaisEntity savedPais = this.getPaisEntityById(id);
 		
 		savedPais.setImagen(paisToEdit.getImagen());
 		savedPais.setDenominacion(paisToEdit.getDenominacion());
@@ -115,10 +112,9 @@ public class PaisServiceImpl implements PaisService {
 	// Methods:
 	// ********
 	
-
 	@Override
 	public void addIcon(Long paisId, Long iconId) {
-		PaisEntity myPais = paisRepo.getById(paisId);
+		PaisEntity myPais = this.getPaisEntityById(paisId);
 		
 		// Invocando cualquier metodo, evitamos el LAZY, trayendonos la DATA.
 		myPais.getIcons().size();
@@ -132,7 +128,7 @@ public class PaisServiceImpl implements PaisService {
 
 	@Override
 	public void removeIconFromPais(Long paisId, Long iconId) {
-		PaisEntity myPais = paisRepo.getById(paisId);
+		PaisEntity myPais = this.getPaisEntityById(paisId);
 		
 		myPais.getIcons().size();
 		IconEntity iconToRemove = iconServ.getIconEntityById(iconId);
@@ -140,6 +136,15 @@ public class PaisServiceImpl implements PaisService {
 		myPais.removeIconFromPais(iconToRemove);
 		
 		paisRepo.save(myPais);		
+	}	
+	
+	@Override
+	public PaisEntity getPaisEntityById(Long paisId) {
+		Optional<PaisEntity> myPais = paisRepo.findById(paisId);
+		if(!myPais.isPresent()) {
+			throw new ParamNotFound("Pais with id: " + paisId + " not found.");
+		}
+		return myPais.get();
 	}
 
 	

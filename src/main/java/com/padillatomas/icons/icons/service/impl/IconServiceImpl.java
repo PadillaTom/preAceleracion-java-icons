@@ -3,6 +3,7 @@ package com.padillatomas.icons.icons.service.impl;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.padillatomas.icons.icons.dto.IconBasicDTO;
 import com.padillatomas.icons.icons.dto.IconDTO;
 import com.padillatomas.icons.icons.dto.IconFiltersDTO;
 import com.padillatomas.icons.icons.entity.IconEntity;
+import com.padillatomas.icons.icons.exception.ParamNotFound;
 import com.padillatomas.icons.icons.mapper.IconMapper;
 import com.padillatomas.icons.icons.mapper.PaisMapper;
 import com.padillatomas.icons.icons.repository.IconRepository;
@@ -79,7 +81,7 @@ public class IconServiceImpl implements IconService {
 	// === PUT ===		
 	@Override
 	public IconDTO editIcon(Long id, IconDTO iconToEdit) {
-		IconEntity savedIcon = iconRepo.getById(id);
+		IconEntity savedIcon = this.getIconEntityById(id);
 		
 		// Cast String to Date:
 		String dateDTO = iconToEdit.getFechaCreacion().toString();
@@ -129,8 +131,11 @@ public class IconServiceImpl implements IconService {
 	// Methods:	
 	@Override
 	public IconEntity getIconEntityById(Long iconId) {
-		IconEntity myIcon = iconRepo.getById(iconId);
-		return myIcon;
+		Optional<IconEntity> myIcon = iconRepo.findById(iconId);
+		if(!myIcon.isPresent()) {
+			throw new ParamNotFound("Icon with id: " + iconId + " not found.");
+		}
+		return myIcon.get();
 	}
 
 
