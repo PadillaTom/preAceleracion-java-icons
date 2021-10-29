@@ -23,4 +23,6 @@ public interface PaisService {
 
 	List<PaisDTO> getByFilters(String name, String continent, String order);
 
+	PaisDTO getPaisDetailsById(Long id);
+
 }

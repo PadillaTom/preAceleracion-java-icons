@@ -49,6 +49,13 @@ public class IconServiceImpl implements IconService {
 		return listDTO;
 	}
 	
+	@Override
+	public IconDTO getIconDetailsById(Long id) {
+		IconEntity myIcon = this.getIconEntityById(id);
+		IconDTO resultIcon = iconMapper.iconEntity2DTO(myIcon, true);
+		return resultIcon;
+	}
+	
 
 	@Override
 	public List<IconDTO> getByFilters(String name, String date, List<Long> cities, String order) {

@@ -72,6 +72,13 @@ public class PaisServiceImpl implements PaisService {
 		List<PaisDTO> resultDTO = paisMapper.paisEntityList2DTOList(myPaises, true);
 		return resultDTO;
 	}
+	
+	@Override
+	public PaisDTO getPaisDetailsById(Long id) {
+		PaisEntity myPais = paisRepo.getById(id);
+		PaisDTO resultDTO = paisMapper.paisEntity2DTO(myPais, true);
+		return resultDTO;
+	}	
 
 	// === DELETE ===
 	@Override
@@ -128,7 +135,8 @@ public class PaisServiceImpl implements PaisService {
 		myPais.removeIconFromPais(iconToRemove);
 		
 		paisRepo.save(myPais);		
-	}	
+	}
+
 	
 	
 }

@@ -47,10 +47,16 @@ public class PaisController {
 		return ResponseEntity.status(HttpStatus.OK).body(myList);
 	}
 	
-	@GetMapping("/detalle")
+	@GetMapping("/all/detalle")
 	public ResponseEntity<List<PaisDTO>> getPaises(){
 		List<PaisDTO> myList = paisServ.getAllPaises();
 		return ResponseEntity.status(HttpStatus.OK).body(myList);
+	}
+	
+	@GetMapping("/detalle/{id}")
+	public ResponseEntity<PaisDTO> getDetailsById(@PathVariable Long id){
+		PaisDTO myPais = paisServ.getPaisDetailsById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(myPais);
 	}
 	
 	// By Filters

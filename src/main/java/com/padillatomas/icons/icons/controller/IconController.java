@@ -35,10 +35,15 @@ public class IconController {
 		return ResponseEntity.status(HttpStatus.OK).body(myList);
 	}
 	
-	@GetMapping("/detalle")
+	@GetMapping("/all/detalle")
 	public ResponseEntity<List<IconDTO>> getAllIconDetalleEntitiy(){
 		List<IconDTO> myList = iconServ.getAllIconDetails();
 		return ResponseEntity.status(HttpStatus.OK).body(myList);
+	}	
+	@GetMapping("/detalle/{id}")
+	public ResponseEntity<IconDTO> getDetailsById(@PathVariable Long id){
+		IconDTO myIcon = iconServ.getIconDetailsById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(myIcon);
 	}	
 	
 	// By Filters

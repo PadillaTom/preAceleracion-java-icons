@@ -23,4 +23,6 @@ public interface IconService {
 
 	List<IconDTO> getByFilters(String name, String date, List<Long> paises, String order);
 
+	IconDTO getIconDetailsById(Long id);
+
 }
