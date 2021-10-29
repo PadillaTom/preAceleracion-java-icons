@@ -70,8 +70,18 @@ public class PaisEntity {
 			joinColumns= @JoinColumn(name = "pais_id"),
 			inverseJoinColumns = @JoinColumn(name = "icon_id"))
 	private Set<IconEntity> icons = new HashSet<>();	
-
 	
+	
+	// Metodos
+	
+	//Add Icon:
+	public void addIconToPais(IconEntity icon) {
+		icons.add(icon);
+	}
+	// Remove Icon:
+	public void removeIconFromPais(IconEntity icon) {
+		icons.remove(icon);
+	}
 	
 	@Override
 	public boolean equals(Object obj) {

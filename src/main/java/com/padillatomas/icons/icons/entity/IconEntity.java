@@ -54,9 +54,13 @@ public class IconEntity {
 	//***
 	// Methods
 	//***	
-	public void addPais(PaisEntity pais) {this.paises.add(pais);}
+	public void addPaisToIcon(PaisEntity pais) {
+		this.paises.add(pais);
+	}
 	
-	public void removePais(PaisEntity pais) {this.paises.remove(pais);}
+	public void removePais(PaisEntity pais) {
+		this.paises.remove(pais);
+	}
 	
 
 }

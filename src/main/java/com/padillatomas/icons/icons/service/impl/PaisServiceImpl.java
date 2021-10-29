@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.padillatomas.icons.icons.dto.PaisBasicDTO;
 import com.padillatomas.icons.icons.dto.PaisDTO;
+import com.padillatomas.icons.icons.entity.IconEntity;
 import com.padillatomas.icons.icons.entity.PaisEntity;
 import com.padillatomas.icons.icons.mapper.IconMapper;
 import com.padillatomas.icons.icons.mapper.PaisMapper;
 import com.padillatomas.icons.icons.repository.PaisRepository;
+import com.padillatomas.icons.icons.service.IconService;
 import com.padillatomas.icons.icons.service.PaisService;
 
 @Service
@@ -23,13 +25,14 @@ public class PaisServiceImpl implements PaisService {
 	@Autowired
 	private IconMapper iconMapper;
 	
+	// Instanciamos: Service
+	@Autowired
+	private IconService iconServ;
+	
 	// Instanciamos: Repository
 	@Autowired
 	private PaisRepository paisRepo;		
 		
-	// ********
-	// Methods:
-	// ********
 	
 	// === POST ===
 	@Override
@@ -80,6 +83,37 @@ public class PaisServiceImpl implements PaisService {
 		PaisDTO savedDTO = paisMapper.paisEntity2DTO(editedPais, false);
 		
 		return savedDTO;
+	}
+
+	// ********
+	// Methods:
+	// ********
+	
+
+	@Override
+	public void addIcon(Long paisId, Long iconId) {
+		PaisEntity myPais = paisRepo.getById(paisId);
+		
+		// Invocando cualquier metodo, evitamos el LAZY, trayendonos la DATA.
+		myPais.getIcons().size();
+		
+		IconEntity iconToAdd = iconServ.getIconEntityById(iconId);
+		myPais.addIconToPais(iconToAdd);
+		
+		paisRepo.save(myPais);		
+		
+	}
+
+	@Override
+	public void removeIconFromPais(Long paisId, Long iconId) {
+		PaisEntity myPais = paisRepo.getById(paisId);
+		
+		myPais.getIcons().size();
+		IconEntity iconToRemove = iconServ.getIconEntityById(iconId);
+		
+		myPais.removeIconFromPais(iconToRemove);
+		
+		paisRepo.save(myPais);		
 	}
 	
 	

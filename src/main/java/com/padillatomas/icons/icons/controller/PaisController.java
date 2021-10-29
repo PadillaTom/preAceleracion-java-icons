@@ -19,7 +19,7 @@ import com.padillatomas.icons.icons.dto.PaisDTO;
 import com.padillatomas.icons.icons.service.PaisService;
 
 @RestController
-@RequestMapping("paises")
+@RequestMapping("cities")
 public class PaisController {
 
 	// === Instanciamos SERVICE ===
@@ -33,8 +33,14 @@ public class PaisController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedPais);
 	}
 	
+	@PostMapping("/{paisId}/icon/{iconId}")
+	public ResponseEntity<Void> addIcon(@PathVariable Long paisId, @PathVariable Long iconId){
+		paisServ.addIcon(paisId, iconId);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
 	// == GET ==
-	@GetMapping("/cities")
+	@GetMapping
 	public ResponseEntity<List<PaisBasicDTO>> getPaisBasic(){
 		List<PaisBasicDTO> myList = paisServ.getAllPaisBasic();
 		return ResponseEntity.status(HttpStatus.OK).body(myList);
@@ -50,17 +56,20 @@ public class PaisController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePaisById(@PathVariable Long id) {
 		paisServ.deletePais(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();	
-		
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();			
 	}
 	
+	@DeleteMapping("/{paisId}/icon/{iconId}")
+	public ResponseEntity<Void> removeIcon(@PathVariable Long paisId, @PathVariable Long iconId	){
+		paisServ.removeIconFromPais(paisId, iconId);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+	}
 	// == PUT ==
 	@PutMapping("/{id}")
 	public ResponseEntity<PaisDTO> editPaisById(@PathVariable Long id, @RequestBody PaisDTO paisToEdit){
 		PaisDTO editedPais = paisServ.editPais(id, paisToEdit);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedPais);
-	}
-	
+	}	
 			
 			
 }

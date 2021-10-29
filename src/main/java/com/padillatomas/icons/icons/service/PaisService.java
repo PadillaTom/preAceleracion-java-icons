@@ -12,9 +12,13 @@ public interface PaisService {
 	List<PaisBasicDTO> getAllPaisBasic();
 
 	List<PaisDTO> getAllPaises();
-
+	
 	void deletePais(Long id);
 
 	PaisDTO editPais(Long id, PaisDTO paisToEdit);
+
+	void addIcon(Long paisId, Long iconId);
+
+	void removeIconFromPais(Long paisId, Long iconId);
 
 }
