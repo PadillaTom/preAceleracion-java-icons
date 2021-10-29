@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.padillatomas.icons.icons.dto.PaisBasicDTO;
@@ -40,7 +41,7 @@ public class PaisController {
 	}
 	
 	// == GET ==
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<PaisBasicDTO>> getPaisBasic(){
 		List<PaisBasicDTO> myList = paisServ.getAllPaisBasic();
 		return ResponseEntity.status(HttpStatus.OK).body(myList);
@@ -50,6 +51,17 @@ public class PaisController {
 	public ResponseEntity<List<PaisDTO>> getPaises(){
 		List<PaisDTO> myList = paisServ.getAllPaises();
 		return ResponseEntity.status(HttpStatus.OK).body(myList);
+	}
+	
+	// By Filters
+	@GetMapping
+	public ResponseEntity<List<PaisDTO>> getDetailsByFilters(
+				@RequestParam(required =false) String name,
+				@RequestParam(required =false) String continent,
+				@RequestParam(required =false, defaultValue = "ASC") String order
+			) {
+		List<PaisDTO> paises = paisServ.getByFilters(name, continent, order);
+		return ResponseEntity.status(HttpStatus.OK).body(paises);
 	}
 	
 	// == DELETE ==		

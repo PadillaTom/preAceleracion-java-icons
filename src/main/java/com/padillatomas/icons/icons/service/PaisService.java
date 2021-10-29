@@ -21,4 +21,6 @@ public interface PaisService {
 
 	void removeIconFromPais(Long paisId, Long iconId);
 
+	List<PaisDTO> getByFilters(String name, String continent, String order);
+
 }

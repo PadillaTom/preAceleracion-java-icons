@@ -25,6 +25,8 @@ public class IconServiceImpl implements IconService {
 	private IconMapper iconMapper;
 	@Autowired
 	private PaisMapper paisMapper;	
+	
+	// Instanciamos: Specifications
 	@Autowired
 	private IconSpecification iconSpecs;
 	

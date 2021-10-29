@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.padillatomas.icons.icons.dto.PaisBasicDTO;
 import com.padillatomas.icons.icons.dto.PaisDTO;
+import com.padillatomas.icons.icons.dto.PaisFiltersDTO;
 import com.padillatomas.icons.icons.entity.IconEntity;
 import com.padillatomas.icons.icons.entity.PaisEntity;
 import com.padillatomas.icons.icons.mapper.IconMapper;
 import com.padillatomas.icons.icons.mapper.PaisMapper;
 import com.padillatomas.icons.icons.repository.PaisRepository;
+import com.padillatomas.icons.icons.repository.specifications.PaisSpecification;
 import com.padillatomas.icons.icons.service.IconService;
 import com.padillatomas.icons.icons.service.PaisService;
 
@@ -24,6 +26,10 @@ public class PaisServiceImpl implements PaisService {
 	private PaisMapper paisMapper;
 	@Autowired
 	private IconMapper iconMapper;
+	
+	// Instanciamos: Specifications
+	@Autowired
+	private PaisSpecification paisSpecs;
 	
 	// Instanciamos: Service
 	@Autowired
@@ -57,6 +63,14 @@ public class PaisServiceImpl implements PaisService {
 		List<PaisDTO> listDTO = paisMapper.paisEntityList2DTOList(entityList, true);
 		
 		return listDTO;
+	}
+	
+	@Override
+	public List<PaisDTO> getByFilters(String name, String continent, String order) {
+		PaisFiltersDTO filtersDTO = new PaisFiltersDTO(name, continent, order);
+		List<PaisEntity> myPaises = paisRepo.findAll(paisSpecs.getByFilters(filtersDTO));
+		List<PaisDTO> resultDTO = paisMapper.paisEntityList2DTOList(myPaises, true);
+		return resultDTO;
 	}
 
 	// === DELETE ===
@@ -114,8 +128,7 @@ public class PaisServiceImpl implements PaisService {
 		myPais.removeIconFromPais(iconToRemove);
 		
 		paisRepo.save(myPais);		
-	}
-	
+	}	
 	
 	
 }
