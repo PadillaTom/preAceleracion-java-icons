@@ -10,9 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "user")
 @Getter
 @Setter
-@Table(name = "user")
 public class UserEntity {
 	
 	@Id
@@ -21,4 +21,18 @@ public class UserEntity {
 	
 	private String username;
 	private String password;
+	
+	// PARA TENER EN CUENTA:
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;
+	private boolean credentialsNonExpired;	
+	private boolean enabled; // Simil SOFT DELETE
+	
+	public UserEntity() {
+		this.accountNonExpired = true;
+		this.accountNonLocked = true;
+		this.credentialsNonExpired = true;
+		this.enabled = true;
+	}	
+
 }
