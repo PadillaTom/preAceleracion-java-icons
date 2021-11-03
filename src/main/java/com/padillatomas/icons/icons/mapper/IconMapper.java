@@ -103,20 +103,16 @@ public class IconMapper {
 	//
 	// === Entity -> DTO ===
 	public IconBasicDTO iconEntity2IconBasicDTO(IconEntity entity) {
-		IconBasicDTO newBasicDTO = new IconBasicDTO();
-		
+		IconBasicDTO newBasicDTO = new IconBasicDTO();		
 		newBasicDTO.setImagen(entity.getImagen());
-		newBasicDTO.setDenominacion(entity.getDenominacion());
-		
-		return newBasicDTO;
-		
+		newBasicDTO.setDenominacion(entity.getDenominacion());		
+		return newBasicDTO;		
 	}
 	
 	//
 	// === List<Entity> -> List<DTO> ===
 	public List<IconBasicDTO> iconBasicEntityList2ListBasicDTO(List<IconEntity> myList) {
-		List<IconBasicDTO> basicList = new ArrayList<>();
-		
+		List<IconBasicDTO> basicList = new ArrayList<>();		
 		for (IconEntity ent : myList) {
 			basicList.add(iconEntity2IconBasicDTO(ent));
 		}

@@ -116,7 +116,7 @@ public class PaisServiceImpl implements PaisService {
 	public void addIcon(Long paisId, Long iconId) {
 		PaisEntity myPais = this.getPaisEntityById(paisId);
 		
-		// Invocando cualquier metodo, evitamos el LAZY, trayendonos la DATA.
+		// Invocando cualquier metodo, "salteamos" el LAZY, trayendonos la DATA.
 		myPais.getIcons().size();
 		
 		IconEntity iconToAdd = iconServ.getIconEntityById(iconId);
