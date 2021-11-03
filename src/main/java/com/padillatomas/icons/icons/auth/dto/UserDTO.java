@@ -10,6 +10,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 	
 	@Email(message = "Username must be an email")

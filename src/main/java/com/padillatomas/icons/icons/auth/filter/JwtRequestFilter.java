@@ -28,6 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jwtUtils; // To EXTRACT and VALIDATE.
 	
+	@Autowired
 	private AuthenticationManager authManager;
 	
 	//
@@ -43,8 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String jwt = null;
 		
 		// Extraemos del TOKEN del HEADER:
-		if (authHeader != null && authHeader.startsWith("Bearer ")) {
-			
+		if (authHeader != null && authHeader.startsWith("Bearer ")) {			
 			jwt = authHeader.substring(7); // 7 char before Token.
 			username = jwtUtils.extractUsername(jwt); // Obtenemos Username.
 		}

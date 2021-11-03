@@ -31,6 +31,7 @@ public class UserAuthController {
 	@Autowired
 	private JwtUtils jwtUtils;
 	
+	@Autowired
 	private AuthenticationManager authManager;
 	
 	// Signup
@@ -74,5 +75,24 @@ public class UserAuthController {
 		// Mandamos la JWT como AUTHENTICATION RESPONSE
 		return ResponseEntity.ok(new AuthenticationResponse(jwt));
 	}
+	
+	// PROCESO COMPLETO:
+	// SIGNUP
+	// 1) Mandamos POST (user y pass)
+	// 2) Cae al FILTERS, (/auth/ no hace nada, porque PermitAll() )
+	// 3) Controller
+	// 4) Service
+	//  ** PISA MISMO USERNAME **
+	//
+	// SIGNIN
+	//
+	//  TIRA NULL
+	//
+	//
+	//
+	//
+	//
+	//
+
 	
 }
