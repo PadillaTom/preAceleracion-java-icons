@@ -24,7 +24,9 @@ public class UserDetailsCustomService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		// Traemos User
+		
 		UserEntity foundUser = userRepo.findByUsername(userName);
+		
 		if (foundUser == null) {
 			throw new UsernameNotFoundException("Username: " + userName + " -> NOT FOUND");
 		}
@@ -38,14 +40,20 @@ public class UserDetailsCustomService implements UserDetailsService {
 	// SIGNUP
 	public boolean signupUser(@Valid UserDTO userToCreate) {
 		UserEntity newUser = new UserEntity();
+		UserEntity matchingUser = userRepo.findByUsername(userToCreate.getUsername());			
 		newUser.setUsername(userToCreate.getUsername());
-		newUser.setPassword(userToCreate.getPassword());
+		newUser.setPassword(userToCreate.getPassword());		
+		if(matchingUser != null && (matchingUser.getUsername().equals(newUser.getUsername()))) {
+			// NO LO CREA, PERO NO ENVIA "Already Exists"
+			// En Controller verificamos TRUE o FALSE
+			// Mandamos ResponseEntity segun corresponda
+			return false;
+		}		
 		newUser = userRepo.save(newUser);
 		
 		//Email Stuff
 		
-		return newUser != null;
-		
+		return newUser != null;		
 	}	
 	
 }

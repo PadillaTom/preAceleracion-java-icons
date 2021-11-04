@@ -45,7 +45,7 @@ public class PaisServiceImpl implements PaisService {
 	// === POST ===
 	@Override
 	public PaisDTO guardarPais(PaisDTO dto) {
-		PaisEntity nuevaEntity = paisMapper.paisDTO2Entity(dto, true);
+		PaisEntity nuevaEntity = paisMapper.paisDTO2Entity(dto, false);
 		PaisEntity savedEntity = paisRepo.save(nuevaEntity);
 		PaisDTO resultadoDTO = paisMapper.paisEntity2DTO(savedEntity, false);
 		return resultadoDTO;

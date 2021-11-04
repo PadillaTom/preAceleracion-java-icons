@@ -37,8 +37,11 @@ public class UserAuthController {
 	// Signup
 	@PostMapping("/signup")
 	public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO userToCreate) throws Exception {
-		userServ.signupUser(userToCreate);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+		boolean isCreated = userServ.signupUser(userToCreate);
+		if(isCreated) {
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		}
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 	}
 	
 	// SignIn
