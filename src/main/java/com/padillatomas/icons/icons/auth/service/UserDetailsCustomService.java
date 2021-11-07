@@ -14,12 +14,16 @@ import org.springframework.stereotype.Service;
 import com.padillatomas.icons.icons.auth.dto.UserDTO;
 import com.padillatomas.icons.icons.auth.entity.UserEntity;
 import com.padillatomas.icons.icons.auth.repository.UserRepository;
+import com.padillatomas.icons.icons.service.EmailService;
 
 @Service
 public class UserDetailsCustomService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private EmailService emailServ;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -51,7 +55,10 @@ public class UserDetailsCustomService implements UserDetailsService {
 		}		
 		newUser = userRepo.save(newUser);
 		
-		//Email Stuff
+		//Email Stuff:
+		if(newUser != null) {
+			emailServ.sendWelcomeEmail(newUser.getUsername());
+		}
 		
 		return newUser != null;		
 	}	
